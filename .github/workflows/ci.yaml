@@ -21,4 +21,5 @@ jobs:
 
       - name: run pipeline
         run: |
+          9518fe2b397bdeb827e49cb35501b5bb91448d8a
           dvc repro
