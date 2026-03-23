@@ -1,4 +1,4 @@
 [core]
     remote = myremote
 ['remote "myremote"']
-    url = s3://mlops-major-project-bucket
+    url = s3://mlops-mini-projectaws10
