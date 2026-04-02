@@ -75,7 +75,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          scripts:
+          script: |
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/emotional"v2.0
             docker stop my-app || true
             docker rm my-app || true
