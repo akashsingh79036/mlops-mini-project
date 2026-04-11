@@ -20,4 +20,4 @@ RUN python -m nltk.downloader stopwords wordnet
 EXPOSE 5000
 
 #set the command to run the application
-CMD ["gunicorn","-bind","0.0.0.0:5000", "--timeout", "180", "app.py:app"]
+CMD ["gunicorn","--bind","0.0.0.0:5000", "--timeout", "180", "app:app"]
