@@ -74,7 +74,7 @@ jobs:
         run: |
           docker push 905418184838.dkr.ecr.ap-south-1.amazonaws.com/supi_ecr:latest
           
-      - name: Deploy to EC2
+      - name: Deploy to EC2   #must install docker and awcli on your machine and add your ec2 user to docker group
         if: success()
         uses: appleboy/ssh-action@v0.1.5
         with:
