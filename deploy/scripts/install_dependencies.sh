@@ -22,7 +22,6 @@ unzip -o /home/ubuntu/awscliv2.zip -d /home/ubuntu/
 sudo /home/ubuntu/aws/install
 
 sudo usermod -aG docker ubuntu
-sudo chmod +x deploy/scripts/install_dependencies.sh
 
 #clean up the AWS CLI installation files
 rm -rf /home/ubuntu/awscliv2.zip /home/ubuntu/aws
