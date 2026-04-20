@@ -4,7 +4,7 @@
 aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 905418184838.dkr.ecr.ap-south-1.amazonaws.com
 
 #Pull the latest docker image from your ECR repository
-docker pull 905418184838.dkr.ecr.ap-south-1.amazonaws.com/supi_ecr:v4
+docker pull 905418184838.dkr.ecr.ap-south-1.amazonaws.com/supi_ecr:v3
 
 # Check if the container 'campusx-app' is running
 if [ "$(docker ps -q -f name=campusx-app)" ]; then
@@ -19,4 +19,4 @@ if [ "$(docker ps -aq -f name=campusx-app)" ]; then
 fi
 
 #Run the new Docker container
-docker run -d -p 80:5000 -e DAGSHUB_PAT=9518fe2b397bdeb827e49cb35501b5bb91448d8a --name campusx-app 905418184838.dkr.ecr.ap-south-1.amazonaws.com/supi_ecr:v4
+docker run -d -p 80:5000 -e DAGSHUB_PAT=9518fe2b397bdeb827e49cb35501b5bb91448d8a --name campusx-app 905418184838.dkr.ecr.ap-south-1.amazonaws.com/supi_ecr:v3
