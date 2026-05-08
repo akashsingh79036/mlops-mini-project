@@ -97,6 +97,6 @@ jobs:
             --application-name mydockerApp2 \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --deployment-group-name MyDockerAppASGDeploymentGroup \
-            --s3-location bucket=campusxcodedeploybucket,key=deployment.zip,bundleType=zip \
+            --s3-location bucket=campusxcodedeploybucket10,key=deployment.zip,bundleType=zip \
             --file-exists-behavior OVERWRITE \
             --region ap-south-1
