@@ -75,7 +75,7 @@ jobs:
         run: |
           docker push 905418184838.dkr.ecr.ap-south-1.amazonaws.com/supi_ecr:latest
           
-      # Zip the required files
+      # Zip the required files for deployment
       - name: Zip files for deployment
         if: success()
         run: |
@@ -97,6 +97,6 @@ jobs:
             --application-name mydockerApp2 \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --deployment-group-name MyDockerAppASGDeploymentGroup \
-            --s3-location bucket=campusxcodedeploybucket10,key=deployment.zip,bundleType=zip \
+            --s3-location bucket=campusxcodedeploybucket10,key=deployment.zip,bundleType=zip \ 
             --file-exists-behavior OVERWRITE \
             --region ap-south-1
