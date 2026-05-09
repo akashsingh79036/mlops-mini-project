@@ -52,6 +52,20 @@ jobs:
         run: python -m unittest tests/test_flask_app.py
 #deploying the flask app through dockerhub
       #push to ECR 
+
+      - name: Debug secrets presence
+        run: |
+          if [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ]; then
+            echo "❌ AWS_ACCESS_KEY_ID is EMPTY"
+          else
+            echo "✅ AWS_ACCESS_KEY_ID is set"
+          fi
+          if [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ]; then
+            echo "❌ AWS_SECRET_ACCESS_KEY is EMPTY"  
+          else
+            echo "✅ AWS_SECRET_ACCESS_KEY is set"
+          fi
+
       - name: Configure AWS Credentials
         if: success()
         uses: aws-actions/configure-aws-credentials@v4
@@ -59,7 +73,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
-          
+
       - name: Login to AWS ECR
         if: success()
         run: |
