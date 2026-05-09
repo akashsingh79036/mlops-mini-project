@@ -52,6 +52,14 @@ jobs:
         run: python -m unittest tests/test_flask_app.py
 #deploying the flask app through dockerhub
       #push to ECR 
+      - name: Configure AWS Credentials
+        if: success()
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+          
       - name: Login to AWS ECR
         if: success()
         run: |
