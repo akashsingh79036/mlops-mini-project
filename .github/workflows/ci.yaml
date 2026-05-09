@@ -69,7 +69,7 @@ jobs:
         run: |
           docker tag supi_ecr:latest 905418184838.dkr.ecr.ap-south-1.amazonaws.com/supi_ecr:latest
 #tagging the image with ecr repo url and pushing it to ecr repo
-
+#push the docker image
       - name: Push Docker image to AWS ECR
         if: success()
         run: |
