@@ -16,7 +16,7 @@ sudo systemctl enable docker
 #install necessary utilities
 sudo apt-get install -y unzip curl
 
-#Download and install AWS CLI
+#Download and install AWS CLI according to the latest link
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/home/ubuntu/awscliv2.zip"
 unzip -o /home/ubuntu/awscliv2.zip -d /home/ubuntu/
 sudo /home/ubuntu/aws/install
