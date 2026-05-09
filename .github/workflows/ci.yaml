@@ -32,13 +32,13 @@ jobs:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: |
           dvc repro
-#dvc workflow repro
+
       - name: Run model tests
         env:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: |
           python -m unittest tests/test_model.py
-#well model promotion can be done manually
+
       - name: Promote model to production
         if: success()
         env:
@@ -50,21 +50,6 @@ jobs:
         env:
           DAGSHUB_PAT: ${{ secrets.DAGSHUB_PAT }}
         run: python -m unittest tests/test_flask_app.py
-#deploying the flask app through dockerhub
-      #push to ECR 
-
-      - name: Debug secrets presence
-        run: |
-          if [ -z "${{ secrets.AWS_ACCESS_KEY_ID }}" ]; then
-            echo "❌ AWS_ACCESS_KEY_ID is EMPTY"
-          else
-            echo "✅ AWS_ACCESS_KEY_ID is set"
-          fi
-          if [ -z "${{ secrets.AWS_SECRET_ACCESS_KEY }}" ]; then
-            echo "❌ AWS_SECRET_ACCESS_KEY is EMPTY"  
-          else
-            echo "✅ AWS_SECRET_ACCESS_KEY is set"
-          fi
 
       - name: Configure AWS Credentials
         if: success()
@@ -77,8 +62,6 @@ jobs:
       - name: Login to AWS ECR
         if: success()
         run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 905418184838.dkr.ecr.ap-south-1.amazonaws.com
 
       - name: Build Docker image
@@ -90,26 +73,22 @@ jobs:
         if: success()
         run: |
           docker tag supi_ecr:latest 905418184838.dkr.ecr.ap-south-1.amazonaws.com/supi_ecr:latest
-#tagging the image with ecr repo url and pushing it to ecr repo
-#push the docker image
+
       - name: Push Docker image to AWS ECR
         if: success()
         run: |
           docker push 905418184838.dkr.ecr.ap-south-1.amazonaws.com/supi_ecr:latest
-          
-      # Zip the required files for deployment
+
       - name: Zip files for deployment
         if: success()
         run: |
           zip -r deployment.zip appspec.yml deploy/scripts/install_dependencies.sh deploy/scripts/start_docker.sh
 
-      #upload the zip file to S3
-      - name: Upload Zip to s3
+      - name: Upload Zip to S3
         if: success()
         run: |
           aws s3 cp deployment.zip s3://campusxcodedeploybucket10/deployment.zip
 
-      # Deploy to AWS CodeDeploy using the uploaded ZIP file
       - name: Deploy to AWS CodeDeploy
         if: success()
         run: |
@@ -117,6 +96,6 @@ jobs:
             --application-name mydockerApp2 \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --deployment-group-name MyDockerAppASGDeploymentGroup \
-            --s3-location bucket=campusxcodedeploybucket10,key=deployment.zip,bundleType=zip \ 
+            --s3-location bucket=campusxcodedeploybucket10,key=deployment.zip,bundleType=zip \
             --file-exists-behavior OVERWRITE \
             --region ap-south-1
